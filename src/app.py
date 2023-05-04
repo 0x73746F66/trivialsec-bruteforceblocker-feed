@@ -67,12 +67,13 @@ def compare_contents(old_contents: str, new_contents: str):
     verbose=internals.APP_ENV != "Prod"
 )
 def handler(event, context):
-    internals.trace_tag({
-        "source": event["source"],
-        "resources": ",".join([
-            e.split(":")[-1] for e in event["resources"]
-        ]),
-    })
+    if event.get("source"):
+        internals.trace_tag({
+            "source": event["source"],
+            "resources": ",".join([
+                e.split(":")[-1] for e in event["resources"]
+            ]),
+        })
     instance_date = datetime.now(timezone.utc).strftime('%Y%m%d%H')
     results = 0
     for feed in config.feeds:
