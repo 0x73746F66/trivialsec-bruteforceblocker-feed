@@ -60,7 +60,7 @@ def compare_contents(old_contents: str, new_contents: str):
             yield ip_address
 
 
-def run(event):
+def main(event):
     if event.get("source"):
         internals.trace_tag({
             "source": event["source"],
@@ -128,6 +128,6 @@ def run(event):
 )
 def handler(event, context):
     try:
-        run(event)
+        main(event)
     except Exception as err:
         raise internals.UnspecifiedError from err
